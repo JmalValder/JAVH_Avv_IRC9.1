@@ -1,0 +1,43 @@
+# segundo_script.sh
+
+```bash
+#!/bin/bash
+
+# ==========================================
+# Lab 2 - Registro continuo de logs
+# ==========================================
+
+set -euo pipefail
+
+path="carpeta2"
+file="archivo2.log"
+ruta="$path/$file"
+
+# Crear carpeta si no existe
+if [[ ! -d "$path" ]]; then
+    mkdir -p "$path"
+fi
+
+# Crear archivo si no existe
+if [[ ! -f "$ruta" ]]; then
+    touch "$ruta"
+fi
+
+contador=1
+
+echo "Iniciando monitor de fechas..."
+echo "Log: $ruta"
+
+while true; do
+
+    fecha=$(date '+%Y-%m-%d %H:%M:%S')
+
+    echo "[Iteración $contador] $fecha" >> "$ruta"
+
+    echo "Registrado: [Iteración $contador] $fecha"
+
+    ((contador++))
+
+    sleep 5
+done
+```

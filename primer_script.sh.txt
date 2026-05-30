@@ -1,0 +1,51 @@
+# primer_script.sh
+
+```bash
+#!/bin/bash
+
+# ==========================================
+# Lab 1 - Primer script Bash
+# ==========================================
+
+echo "================================="
+echo " Inicio del script"
+echo " Fecha: $(date '+%Y-%m-%d %H:%M:%S')"
+echo "================================="
+
+# Listado del directorio padre
+directorio=$(ls ../)
+
+# Espacio disponible en /
+peso=$(df -P / | awk 'NR==2 {gsub("%","",$5); print 100-$5}')
+
+echo ""
+echo "Contenido del directorio padre:"
+echo "$directorio"
+
+echo ""
+echo "Espacio libre aproximado:"
+echo "${peso} GB"
+
+# Condicional
+if (( peso > 15 )); then
+    mkdir -p primer_carpeta
+    touch primer_carpeta/primer_archivo
+
+    echo "$directorio" > primer_carpeta/primer_archivo
+
+    echo "✅ Carpeta y archivo creados."
+elif (( peso == 11 )); then
+    echo "Se tiene espacio suficiente, pero usamos elif para practicar."
+else
+    echo "❌ Sin espacio suficiente."
+fi
+
+echo ""
+echo "Tamaño de elementos en ../"
+
+cd ../ || exit 1
+
+for i in $directorio; do
+    du -sh "$i" 2>/dev/null
+done
+```
